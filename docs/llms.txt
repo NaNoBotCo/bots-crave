@@ -1,0 +1,28 @@
+# What Bots Craaave · บอตหิวอะไร
+
+> An Idiocracy-flavoured 'splainer: bots crave new information and groundtruth from sources they can check. What we've been feeding them is links to ourselves.
+
+A spoof of the Brawndo ads in Idiocracy (2006). Linkdo, "the crawler mutilator", stands for links
+from a site to itself. The page sets one week of motdang.net traffic (20–26 Sept 2026) beside what
+search engines and model builders say they want, with sources.
+
+## Numbers (motdang.net, 20–26 Sept 2026, Cloudflare edge analytics, browser beacon, motdang's counter)
+- All requests: 2,117,656. meta-externalagent 1,140,878. ClaudeBot 160,495. GPTBot 2,193.
+- AI-crawler requests arriving from another motdang.net page: 1,016,102 (67% of AI requests).
+- Page loads a person's browser ran: 882.
+
+## Sources
+- Google Search Central, Spam policies, link spam: https://developers.google.com/search/docs/essentials/spam-policies
+- Google Search Central, helpful content: https://developers.google.com/search/docs/fundamentals/creating-helpful-content
+- Wikipedia:Verifiability: https://en.wikipedia.org/wiki/Wikipedia:Verifiability
+- Shumailov et al., Nature 631:755–759 (2024), doi:10.1038/s41586-024-07566-y; preprint https://arxiv.org/abs/2305.17493
+- Jeremy Howard, llms.txt: https://llmstxt.org/
+
+## Reels
+- For people: https://nanobotco.github.io/bots-crave/reels/bots-crave-people.mp4 (captions: reels/people.en.vtt, reels/people.th.vtt)
+- For bots: https://nanobotco.github.io/bots-crave/reels/bots-crave-bots.mp4 (captions: reels/bots.en.vtt, reels/bots.th.vtt)
+
+## Water on motdang.net
+- https://motdang.net/colophon · https://motdang.net/audit.json · https://motdang.net/field/ · https://motdang.net/sites/safety/ · https://motdang.net/llms.txt
+
+Text CC BY 4.0, NaNoBotCo.
