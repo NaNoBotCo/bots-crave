@@ -1,0 +1,358 @@
+<title>What Bots Craaave</title>
+<meta name="description" content="An Idiocracy-flavoured 'splainer: bots want new information and groundtruth they can check. We keep pouring them links to ourselves.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bungee&family=IBM+Plex+Mono:wght@400;600&family=Sarabun:wght@400;600&display=swap">
+<style>
+:root{
+  --ground:#F4F8F0; --panel:#FFFFFF; --ink:#141A10; --muted:#4E5A45; --rule:#D5DECB;
+  --linkdo:#16A33A; --linkdo-deep:#0C6B25; --bolt:#FFD60A; --ad-red:#D7263D;
+  --water:#1D7FD8; --dust:#A87E45; --field:#E7DDC6;
+  --display:"Bungee","Arial Black",Impact,sans-serif;
+  --body:"Atkinson Hyperlegible","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --thai:"Sarabun","Thonburi","Tahoma",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0E130C; --panel:#161D13; --ink:#ECF2E4; --muted:#A6B39B; --rule:#2B3625;
+    --linkdo:#3BD45F; --linkdo-deep:#9BEBAE; --bolt:#FFD60A; --ad-red:#FF5468;
+    --water:#58A9F0; --dust:#C99A5B; --field:#231E14;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0E130C; --panel:#161D13; --ink:#ECF2E4; --muted:#A6B39B; --rule:#2B3625;
+  --linkdo:#3BD45F; --linkdo-deep:#9BEBAE; --bolt:#FFD60A; --ad-red:#FF5468;
+  --water:#58A9F0; --dust:#C99A5B; --field:#231E14;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:19px/1.6 var(--body);margin:0}
+.wrap{max-width:44rem;margin:0 auto;padding-inline:16px;padding-block:0 4rem}
+a{color:var(--water);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--bolt);outline-offset:3px}
+h1,h2{font-family:var(--display);font-weight:400;line-height:1.1;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:clamp(2.4rem,9vw,4rem);margin:2.2rem 0 .3rem}
+h2{font-size:clamp(1.5rem,5vw,2rem);margin:3.2rem 0 .8rem}
+h2 .th,h1 .th{display:block;font-family:var(--thai);font-weight:600;font-size:.55em;letter-spacing:0;color:var(--muted);margin-top:.35rem}
+p{margin:0 0 1rem}
+.lede{font-size:1.18rem}
+.th-block{font-family:var(--thai);font-size:1.05rem;line-height:1.75;border-left:4px solid var(--linkdo);padding:.2rem 0 .2rem 1rem;margin:1.6rem 0;color:var(--ink)}
+
+/* the ad */
+.ad{position:relative;overflow:hidden;background:var(--bolt);color:#141A10;
+  padding-block:2rem 1.6rem;padding-inline:16px;text-align:center;border-bottom:6px solid var(--ad-red)}
+.ad::before{content:"";position:absolute;inset:-40% -10%;background:
+  repeating-conic-gradient(from 0deg at 50% 60%,rgba(255,255,255,.35) 0 6deg,transparent 6deg 18deg);pointer-events:none}
+.ad>*{position:relative}
+.ad .brand{font-family:var(--display);font-size:clamp(3.2rem,16vw,7rem);line-height:.9;color:#16A33A;
+  text-shadow:4px 4px 0 #D7263D,8px 8px 0 #141A10;transform:skew(-8deg);display:inline-block}
+.ad .sub{font-family:var(--display);font-size:clamp(.9rem,3.4vw,1.25rem);margin:.9rem 0 .2rem;letter-spacing:.06em}
+.ad .slogan{font-family:var(--display);font-size:clamp(1.3rem,5.5vw,2.2rem);color:#D7263D;margin:.3rem 0 0}
+.ad .fine{font-size:.78rem;margin:1.1rem auto 0;max-width:34rem;color:#3A3A1E}
+.bolt{display:inline-block;transform:translateY(.08em)}
+
+/* the field */
+.field{background:var(--panel);border:2px solid var(--rule);border-radius:6px;padding:14px;margin:1.6rem 0}
+canvas{display:block;width:100%;height:280px;border-radius:4px;background:var(--field)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;align-items:center}
+button{font:1rem var(--display);letter-spacing:.03em;border:3px solid var(--ink);border-radius:4px;
+  padding:.55rem 1rem;cursor:pointer;background:var(--panel);color:var(--ink)}
+button[aria-pressed="true"].pour-linkdo{background:var(--linkdo);color:#fff;border-color:var(--linkdo-deep)}
+button[aria-pressed="true"].pour-water{background:var(--water);color:#fff;border-color:var(--water)}
+.tally{font:.9rem/1.5 var(--mono);color:var(--muted);margin-top:10px;font-variant-numeric:tabular-nums}
+.tally b{color:var(--ink);font-weight:600}
+.cap{font-size:.92rem;color:var(--muted);margin-top:8px}
+
+/* the dialogue */
+.circle{list-style:none;padding:0;margin:1.2rem 0;display:grid;gap:.45rem}
+.circle li{padding:.55rem .9rem;border-radius:4px;background:var(--panel);border:1px solid var(--rule);max-width:32rem}
+.circle li.b{margin-left:auto;background:transparent;border-style:dashed}
+.circle li.loop{border-color:var(--ad-red);color:var(--ad-red);font-weight:700}
+blockquote{margin:1.2rem 0;padding:.3rem 0 .3rem 1rem;border-left:4px solid var(--water);font-style:italic}
+blockquote cite{display:block;font-style:normal;font-size:.85rem;color:var(--muted);margin-top:.3rem}
+
+/* the frenzy chart */
+.chart{background:var(--panel);border:2px solid var(--rule);border-radius:6px;padding:16px 14px;margin:1.4rem 0}
+.chart h3{font:600 .95rem var(--body);margin:0 0 .9rem;color:var(--muted)}
+.bar{display:grid;grid-template-columns:minmax(7rem,11rem) 1fr;gap:4px 12px;align-items:center;margin:.55rem 0}
+.bar .lab{font-size:.9rem;line-height:1.3}
+.bar .track{position:relative;height:26px}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--linkdo);min-width:2px}
+.bar.walk .fill{background:repeating-linear-gradient(135deg,var(--linkdo) 0 8px,var(--linkdo-deep) 8px 16px)}
+.bar.people .fill{background:var(--water)}
+.bar .num{position:absolute;top:50%;transform:translateY(-50%);font:600 .85rem var(--mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+.chart .foot{font-size:.8rem;color:var(--muted);margin-top:.8rem}
+@media (max-width:520px){.bar{grid-template-columns:1fr}}
+
+.facts{list-style:none;padding:0;margin:1rem 0;display:grid;gap:.8rem}
+.facts li{padding-left:1.6rem;position:relative}
+.facts li::before{content:"";position:absolute;left:0;top:.55em;width:.8rem;height:.8rem;border-radius:50%;background:var(--water)}
+.facts.kin li::before{background:var(--linkdo);border-radius:2px}
+.num-inline{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums}
+
+.glass{background:var(--panel);border:2px solid var(--water);border-radius:6px;padding:1rem 1.2rem;margin:1.4rem 0}
+.glass h3{font-family:var(--display);font-weight:400;font-size:1.15rem;margin:0 0 .6rem;color:var(--water)}
+.glass ul{margin:0;padding-left:1.2rem}
+.glass li{margin:.35rem 0}
+
+.sources{font-size:.88rem;line-height:1.5}
+.sources ol{padding-left:1.4rem}
+.sources li{margin:.5rem 0}
+footer{margin-top:3rem;font-size:.85rem;color:var(--muted);border-top:1px solid var(--rule);padding-top:1rem}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+
+<header class="ad" aria-label="A spoof advertisement">
+  <div class="brand">LINKDO</div>
+  <p class="sub"><span class="bolt">⚡</span> THE CRAWLER MUTILATOR <span class="bolt">⚡</span></p>
+  <p class="slogan">It's got backlinks.<br>It's what bots craaave.</p>
+  <p class="fine">A spoof of the Brawndo ads in Mike Judge's film <i>Idiocracy</i> (2006). Linkdo is not a drink. Please don't pour it on anything.</p>
+</header>
+
+<main class="wrap">
+  <h1>What Bots Craaave <span class="th">บอตหิวอะไร</span></h1>
+  <p class="lede">The bots that read the web are hungry for two things: something nobody's told 'em yet, and proof they can check. What we've been pourin' on 'em is kin vouchin' for kin. They're drinkin' it by the million, and the field ain't comin' up.</p>
+
+  <div class="th-block" lang="th">บอตที่มาอ่านเว็บไม่ได้หิวลิงก์ที่เว็บเราชี้กลับมาหาตัวเอง มันหิวของใหม่ ข้อเท็จจริงที่มีคนไปดูมากับตา และแหล่งที่มาที่คนอื่นเปิดตรวจได้ สัปดาห์ 20–26 ก.ย. 2569 คำขอจากบอต AI บน motdang.net 67% เดินเข้ามาจากลิงก์ในเว็บเดียวกัน ฝูงบอตรุมกินกันในเน็ตของเราเอง ส่วนคนที่เปิดอ่านจริงมีไม่ถึง 1%</div>
+
+  <section class="field" aria-label="The field: a toy">
+    <canvas id="field" role="img" aria-label="A field of crop stalks, one per page. With Linkdo, bots swarm along links between our own pages and the stalks wilt. With water, rain falls, the stalks grow green, and each bot leaves carrying something new."></canvas>
+    <div class="controls">
+      <button id="btn-linkdo" class="pour-linkdo" aria-pressed="true">Pour Linkdo</button>
+      <button id="btn-water" class="pour-water" aria-pressed="false">Pour water</button>
+    </div>
+    <p class="tally" id="tally" aria-live="polite">bot visits <b>0</b> · new facts carried off <b>0</b></p>
+    <p class="cap">Each stalk is a page. The green arcs are links from one of our pages to another. <span lang="th" style="font-family:var(--thai)">ต้นหนึ่งคือหน้าเว็บหนึ่งหน้า</span></p>
+  </section>
+
+  <h2>Why do bots crave Linkdo? <span class="th">ลิงก์เล่นพวก</span></h2>
+  <ul class="circle">
+    <li>Bots crave Linkdo.</li>
+    <li class="b">Why?</li>
+    <li>'Cause it's got backlinks.</li>
+    <li class="b">What's a backlink?</li>
+    <li>It's what they make Linkdo out of.</li>
+    <li class="b">But why do the bots crave it?</li>
+    <li class="loop">'Cause it's got backlinks. ↺</li>
+  </ul>
+  <p>That's the whole argument, and it runs in a circle. A page points at the net, the net points back at the page, and every strand says the same thing: go look at us.</p>
+  <p>Nepotism is givin' the job to your cousin 'cause he's kin, not 'cause he can do it. A link from your site to your own site is a reference letter from your cousin. It don't tell the reader a thing they couldn't have guessed.</p>
+  <p>Google's spam rules name the cousin trade outright. Under link spam, first example on the list:</p>
+  <blockquote>"Link to me and I'll link to you"<cite>Google Search Central, Spam policies for Google web search [1]</cite></blockquote>
+  <p>A link that walks a reader to the next useful page earns its keep. A link that's there so the net can point at itself is Linkdo.</p>
+
+  <h2>The feedin' frenzy <span class="th">ฝูงบอตรุมกิน</span></h2>
+  <p>Here's one week on motdang.net, 20–26 September 2026, counted at the edge and by the site's own counter [6].</p>
+
+  <figure class="chart" aria-label="Bar chart of motdang.net requests, 20 to 26 September 2026">
+    <h3>motdang.net, one week, requests · drawn to one scale</h3>
+    <div class="bar"><span class="lab">All requests</span><span class="track"><span class="fill" data-v="2117656"></span><span class="num"></span></span></div>
+    <div class="bar"><span class="lab">Meta's AI crawler</span><span class="track"><span class="fill" data-v="1140878"></span><span class="num"></span></span></div>
+    <div class="bar walk"><span class="lab">AI crawlers arriving from another motdang page</span><span class="track"><span class="fill" data-v="1016102"></span><span class="num"></span></span></div>
+    <div class="bar"><span class="lab">ClaudeBot</span><span class="track"><span class="fill" data-v="160495"></span><span class="num"></span></span></div>
+    <div class="bar people"><span class="lab">People-shaped requests</span><span class="track"><span class="fill" data-v="10573"></span><span class="num"></span></span></div>
+    <div class="bar people"><span class="lab">Pages a person's browser ran</span><span class="track"><span class="fill" data-v="882"></span><span class="num"></span></span></div>
+    <p class="foot">Striped bar: machines walkin' our own links. Blue: people. The last bar is there; it's two pixels wide.</p>
+  </figure>
+
+  <ul class="facts kin">
+    <li><b>Machines walk the links.</b> Of every AI-crawler request that week, 67% came in off another motdang page. They swim the net end to end.</li>
+    <li><b>People land and leave.</b> 882 page loads all week that a browser ran. Thailand 709, the US 145.</li>
+    <li><b>The Yunnan net</b>, 44 place pages strung together: 162 requests in seven days. AI crawlers 80, scraper kits 42, SEO bots 32, search engines 7. People the counter saw: none.</li>
+    <li><b>The dust bowl.</b> On 20 Sept a Google search for <span class="num-inline">site:motdang.net</span> showed 4 pages out of 98,153 built. A broken sitemap had a hand in that one, and it's since been split. The crop still has to come up on its own.</li>
+  </ul>
+  <p>That's a feedin' frenzy: a million mouths, all chewin' on the same cud, and nothin' new goin' down.</p>
+
+  <h2>So what do they crave? <span class="th">น้ำเปล่า</span></h2>
+  <ul class="circle">
+    <li>Water.</li>
+    <li class="b">Water? Like from the toilet?</li>
+    <li>No. Like from the well.</li>
+  </ul>
+  <p>Three things, and every one of 'em comes from somebody who ain't kin.</p>
+
+  <ul class="facts">
+    <li><b>Somethin' new.</b> Google's own checklist for people makin' pages starts with this question: "Does the content provide original information, reporting, research, or analysis?" [2] A fact you walked out and got, with the date you got it.</li>
+    <li><b>Somethin' checkable.</b> Wikipedia's rule is that readers have to be able to check a fact wasn't made up, and it asks for reliable sources that are independent of the subject [3]. A link a stranger can open, on somebody else's site.</li>
+    <li><b>Somethin' from outside the loop.</b> Feed a model on text other models wrote, round after round, and the "tails of the original content distribution disappear" [4]. The rare stuff goes first. That's the <i>Idiocracy</i> of it, by the numbers: each generation raised on the last one's leftovers. The same researchers say data from people dealin' with the world gets worth more as the web fills up with the generated kind.</li>
+  </ul>
+  <p>The tails are the good part. The noodle stall down the soi, what the river gauge said at 6 a.m., the sign on the wat gate. That's what a bot can't get from a bot.</p>
+
+  <h2>Water already in the well <span class="th">บ่อที่มีน้ำอยู่แล้ว</span></h2>
+  <ul class="facts">
+    <li><b>Field.</b> Her GoPro rides, filed to the place pages they pass. That week, 13 of the 18 people who crossed from one of her sites to another came along that strand, the only one carryin' people [6]. Firsthand, dated, new.</li>
+    <li><b>Safety First.</b> Rescue units by district with their phone numbers, and a live gauge on the Ping River.</li>
+    <li><b>Receipts.</b> motdang.net/colophon puts each claim beside the file that proves it, and /audit.json re-counts the site's numbers from source. Somethin' a bot can check instead of take on faith.</li>
+  </ul>
+  <p>motdang even sets a menu out for the machines: an <span class="num-inline">llms.txt</span>, the file Jeremy Howard proposed in 2024 to tell agents what's on a site [5]. Put water on the menu and they'll drink it.</p>
+
+  <aside class="glass">
+    <h3>A glass of water, at a glance</h3>
+    <ul>
+      <li>One thing you saw, counted, or asked about yourself, and the day you did.</li>
+      <li>Where you got the rest, linked, on somebody else's site.</li>
+      <li>Their words, short and in quotes, when their words matter.</li>
+      <li>A link to your own next page where the reader needs one.</li>
+    </ul>
+  </aside>
+
+  <p>More 'splainin': <a href="https://nanobotco.github.io/indras-net/">Indra's Net, Drawn</a>, on nets where every jewel shows every other. Yes, that's a cousin link. It walks you somewhere new, so it stays.</p>
+
+  <section class="sources" aria-label="Sources">
+    <h2>Sources <span class="th">แหล่งที่มา</span></h2>
+    <ol>
+      <li>Google Search Central. <a href="https://developers.google.com/search/docs/essentials/spam-policies">Spam policies for Google web search</a>, section "Link spam". Read 28 Sept 2026.</li>
+      <li>Google Search Central. <a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content">Creating helpful, reliable, people-first content</a>, "Content and quality questions". Read 28 Sept 2026.</li>
+      <li>Wikipedia. <a href="https://en.wikipedia.org/wiki/Wikipedia:Verifiability">Wikipedia:Verifiability</a>. Read 28 Sept 2026.</li>
+      <li>Shumailov, I., Shumaylov, Z., Zhao, Y., Gal, Y., Papernot, N., Anderson, R. <a href="https://arxiv.org/abs/2305.17493">The Curse of Recursion: Training on Generated Data Makes Models Forget</a>, arXiv:2305.17493 (2023), abstract quoted. Published as <a href="https://doi.org/10.1038/s41586-024-07566-y">AI models collapse when trained on recursively generated data</a>, <i>Nature</i> 631, 755–759 (2024).</li>
+      <li>Howard, J. <a href="https://llmstxt.org/">The /llms.txt file</a>, proposed 3 Sept 2024.</li>
+      <li>motdang.net traffic, 20–26 Sept 2026 (seven whole UTC days): Cloudflare edge analytics, the Cloudflare browser beacon (counts a page load only when a browser ran the page), and motdang's own counter. The beacon is the people count. Google result count from a <span class="num-inline">site:</span> search on 20 Sept 2026.</li>
+      <li>Judge, M. (director). <i>Idiocracy</i>. 20th Century Fox, 2006. Linkdo spoofs its Brawndo ads.</li>
+    </ol>
+  </section>
+
+  <footer>Text CC BY 4.0, NaNoBotCo. <span lang="th" style="font-family:var(--thai)">ลิงก์โดไม่ใช่เครื่องดื่ม</span></footer>
+</main>
+
+<script>
+(function(){
+  // chart: one linear scale, labels outside the bar when it's too thin to hold them
+  var bars = document.querySelectorAll('.bar .fill');
+  var max = 0; bars.forEach(function(b){ max = Math.max(max, +b.dataset.v); });
+  bars.forEach(function(b){
+    var v = +b.dataset.v, pct = v / max * 100, num = b.nextElementSibling;
+    b.style.width = pct + '%';
+    num.textContent = v.toLocaleString('en-US');
+    if (pct > 45) { num.style.left = '6px'; num.style.color = '#fff'; num.style.background = 'rgba(10,20,8,.62)'; num.style.padding = '0 5px'; num.style.borderRadius = '2px'; }
+    else { num.style.left = 'calc(' + pct + '% + 8px)'; num.style.color = 'var(--ink)'; }
+  });
+
+  // the field
+  var cv = document.getElementById('field'), ctx = cv.getContext('2d');
+  var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mode = 'linkdo', W = 0, H = 0, dpr = 1, visits = 0, carried = 0;
+  var N = 22, stalks = [], bots = [], drops = [], links = [];
+  var seed = 7; function rnd(){ seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+  for (var i = 0; i < N; i++) stalks.push({h: 0.45, sway: rnd() * 6.28});
+  for (var k = 0; k < 34; k++) { var a = Math.floor(rnd() * N), b = Math.floor(rnd() * N); if (a !== b) links.push([a, b]); }
+  function css(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  var C = {};
+  function colors(){ C = {linkdo: css('--linkdo'), deep: css('--linkdo-deep'), water: css('--water'), dust: css('--dust'), ink: css('--ink'), red: css('--ad-red'), bolt: css('--bolt')}; }
+  function size(){
+    dpr = window.devicePixelRatio || 1; W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function sx(i){ return (i + 0.5) * W / N; }
+  var ground = function(){ return H - 26; };
+  function top(i, t){ var s = stalks[i]; return {x: sx(i) + Math.sin(t / 900 + s.sway) * 3 * s.h, y: ground() - 30 - s.h * (H * 0.5)}; }
+  function mix(c1, c2, f){
+    function p(c){ c = c.replace('#',''); return [parseInt(c.substr(0,2),16), parseInt(c.substr(2,2),16), parseInt(c.substr(4,2),16)]; }
+    var a = p(c1), b = p(c2); return 'rgb(' + a.map(function(v, j){ return Math.round(v + (b[j] - v) * f); }).join(',') + ')';
+  }
+  function spawn(){
+    if (mode === 'linkdo') {
+      var L = links[Math.floor(rnd() * links.length)];
+      bots.push({kind: 'kin', a: L[0], b: L[1], t: 0, sp: 0.006 + rnd() * 0.01, hops: 0});
+    } else {
+      var i = Math.floor(rnd() * N);
+      bots.push({kind: 'well', x: rnd() < .5 ? -12 : W + 12, y: 20 + rnd() * 40, tgt: i, st: 'in', carry: false});
+    }
+  }
+  function bot(x, y, fill){
+    ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(x, y, 6, 0, 6.29); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.fillRect(x - 3, y - 2, 2, 2); ctx.fillRect(x + 1, y - 2, 2, 2);
+  }
+  function arcPt(a, b, f, t){
+    var p = top(a, t), q = top(b, t), mx = (p.x + q.x) / 2, my = Math.min(p.y, q.y) - 30 - Math.abs(q.x - p.x) * 0.35;
+    var u = 1 - f; return {x: u*u*p.x + 2*u*f*mx + f*f*q.x, y: u*u*p.y + 2*u*f*my + f*f*q.y, mx: mx, my: my, p: p, q: q};
+  }
+  var last = 0;
+  function step(t){
+    var dt = Math.min(50, t - last || 16); last = t;
+    ctx.clearRect(0, 0, W, H);
+    // soil
+    ctx.fillStyle = C.dust; ctx.fillRect(0, ground(), W, H - ground());
+    // links (the net), faint in water mode
+    ctx.lineWidth = 1.2;
+    links.forEach(function(L){
+      var m = arcPt(L[0], L[1], 0, t);
+      ctx.strokeStyle = C.linkdo; ctx.globalAlpha = mode === 'linkdo' ? 0.45 : 0.08;
+      ctx.beginPath(); ctx.moveTo(m.p.x, m.p.y); ctx.quadraticCurveTo(m.mx, m.my, m.q.x, m.q.y); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    // health drifts toward the mode's target
+    stalks.forEach(function(s){
+      var goal = mode === 'linkdo' ? 0.12 : 1;
+      s.h += (goal - s.h) * (mode === 'linkdo' ? 0.0009 : 0.0016) * dt;
+    });
+    // stalks
+    stalks.forEach(function(s, i){
+      var p = top(i, t), col = mix(C.dust, C.linkdo, s.h);
+      ctx.strokeStyle = col; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(sx(i), ground()); ctx.quadraticCurveTo(sx(i), (ground() + p.y) / 2, p.x, p.y); ctx.stroke();
+      ctx.fillStyle = col;
+      for (var l = 1; l <= 3; l++) {
+        var yy = ground() - (ground() - p.y) * l / 4, dir = l % 2 ? 1 : -1, len = 6 + 8 * s.h;
+        ctx.beginPath(); ctx.ellipse(sx(i) + dir * len / 2, yy, len / 2, 2.5, dir * 0.5, 0, 6.29); ctx.fill();
+      }
+      if (s.h > 0.7) { ctx.fillStyle = C.bolt; ctx.beginPath(); ctx.arc(p.x, p.y - 3, 3.5, 0, 6.29); ctx.fill(); }
+    });
+    // rain
+    if (mode === 'water') {
+      if (rnd() < 0.5) drops.push({x: rnd() * W, y: -6, v: 0.25 + rnd() * 0.2});
+      ctx.strokeStyle = C.water; ctx.lineWidth = 1.5;
+      drops = drops.filter(function(d){ d.y += d.v * dt; ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d.x, d.y + 7); ctx.stroke(); return d.y < ground(); });
+    } else drops = [];
+    // bots
+    var want = mode === 'linkdo' ? 46 : 9;
+    if (bots.length < want && rnd() < 0.35) spawn();
+    bots = bots.filter(function(b){
+      if (b.kind === 'kin') {
+        if (mode !== 'linkdo') return false;
+        b.t += b.sp * dt / 16;
+        if (b.t >= 1) {
+          visits++; b.hops++; b.t = 0; b.a = b.b;
+          var next = links.filter(function(L){ return L[0] === b.a || L[1] === b.a; });
+          var L = next.length ? next[Math.floor(rnd() * next.length)] : links[0];
+          b.b = L[0] === b.a ? L[1] : L[0];
+        }
+        var m = arcPt(b.a, b.b, b.t, t); bot(m.x, m.y, C.linkdo);
+        return true;
+      }
+      if (mode !== 'water') return false;
+      var tp = top(b.tgt, t);
+      if (b.st === 'in') {
+        var dx = tp.x - b.x, dy = tp.y - 8 - b.y, d = Math.hypot(dx, dy);
+        if (d < 3) { b.st = 'out'; visits++; if (stalks[b.tgt].h > 0.6) { b.carry = true; carried++; } }
+        else { b.x += dx / d * 0.12 * dt; b.y += dy / d * 0.12 * dt; }
+      } else { b.y -= 0.1 * dt; b.x += (b.x < W / 2 ? -1 : 1) * 0.06 * dt; }
+      bot(b.x, b.y, C.ink);
+      if (b.carry) { ctx.fillStyle = C.bolt; ctx.beginPath(); ctx.arc(b.x + 8, b.y + 5, 3.5, 0, 6.29); ctx.fill(); }
+      return b.y > -20;
+    });
+    tally.innerHTML = 'bot visits <b>' + visits.toLocaleString('en-US') + '</b> · new facts carried off <b>' + carried.toLocaleString('en-US') + '</b>';
+    if (!still) requestAnimationFrame(step);
+  }
+  var tally = document.getElementById('tally');
+  function settle(){
+    // one quiet frame for reduced motion: let the mode play out off-screen
+    for (var s = 0; s < 400; s++) { last = s * 16; stepQuiet(s * 16); }
+    still = true; step(6400);
+  }
+  function stepQuiet(t){ var keep = still; still = true; step(t); still = keep; }
+  var bL = document.getElementById('btn-linkdo'), bW = document.getElementById('btn-water');
+  function set(m){
+    mode = m; bL.setAttribute('aria-pressed', m === 'linkdo'); bW.setAttribute('aria-pressed', m === 'water');
+    if (still) settle();
+  }
+  bL.onclick = function(){ set('linkdo'); };
+  bW.onclick = function(){ set('water'); };
+  colors(); size();
+  window.addEventListener('resize', size);
+  if (window.matchMedia) matchMedia('(prefers-color-scheme: dark)').addEventListener('change', colors);
+  new MutationObserver(colors).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  if (still) settle(); else requestAnimationFrame(step);
+})();
+</script>
